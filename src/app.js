@@ -26,4 +26,11 @@ app.use((err, req, res, next) => {
     });
 });
 
+
+const connectDB = require("./config/db.js");
+app.use(async (req, res, next) => {
+  try { await connectDB(); next(); } catch (e) { next(e); }
+});
+app.get("/", (req, res) => res.json({ message: "API running" }));
+
 module.exports = app;
